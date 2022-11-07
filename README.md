@@ -1,2 +1,2 @@
-# Computer Science NEA
- The homeland and the mainland where my Computer Science NEA is located.
+# CompSci-NEA
+A game I am creating for my Computer Science NEA project, with a Horror genre.
