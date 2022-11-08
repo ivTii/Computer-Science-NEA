@@ -6,8 +6,8 @@ public class playerMovement : MonoBehaviour
 {
     public CharacterController controller;
 
-    public float baseSpeed = 8f;
-    private float speed = 8f;
+    public float baseSpeed = 8f; // Adjustable default speed
+    private float speed = 8f; // Variable that can me modified.
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
 
@@ -18,6 +18,7 @@ public class playerMovement : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
     bool isSprinting;
+    bool mapStatus = false;
 
     // Update is called once per frame
     void Update()
@@ -33,9 +34,9 @@ public class playerMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * x + transform.forward * z;
+        Vector3 move = transform.right * x + transform.forward * z; // Basic movement for the player, x-axis being horizontal, z-axis being vertical
 
-        controller.Move(move * speed * Time.deltaTime);
+        controller.Move(move * speed * Time.deltaTime); // Movement from 36 * current speed * time.
 
         if (Input.GetButtonDown("Jump") && isGrounded) // While on ground, jump is available
         {
@@ -54,6 +55,29 @@ public class playerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime; // Gravity is constant
 
         controller.Move(velocity * Time.deltaTime); // Velocity is constant every frame while key is pressed
+
+        if (Input.GetButtonDown("Map"))
+        {
+            if (mapStatus)
+            {
+                mapStatus = false;
+            }
+            else
+            { 
+                mapStatus = true;
+            }
+        }
+
+        if (mapStatus)
+        {
+            speed = 0f;
+        } 
+        else
+        {
+            speed = baseSpeed;
+        }
+
+
     }
 
 }
