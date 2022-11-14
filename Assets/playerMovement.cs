@@ -7,7 +7,7 @@ public class playerMovement : MonoBehaviour
     public CharacterController controller;
 
     public float baseSpeed = 8f; // Adjustable default speed
-    private float speed = 8f; // Variable that can me modified.
+    private float speed;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
 
@@ -20,6 +20,12 @@ public class playerMovement : MonoBehaviour
     bool isSprinting;
     bool mapStatus = false;
 
+    // Update is called on start-up
+    void Start()
+    {
+        speed = baseSpeed;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -29,6 +35,15 @@ public class playerMovement : MonoBehaviour
         if (isGrounded && velocity.y < 0) // Prevents gravity from increasing rapidly
         {
             velocity.y = -6f;
+        }
+
+        if (isSprinting) // While sprinting, speed = 1.5x
+        {
+            speed = baseSpeed * 1.5f;
+        }
+        else
+        {
+            speed = baseSpeed;
         }
 
         float x = Input.GetAxis("Horizontal");
@@ -41,15 +56,6 @@ public class playerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded) // While on ground, jump is available
         {
             velocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
-
-        if (isSprinting) // While sprinting, speed = 1.5x
-        {
-            speed = baseSpeed * 1.5f;
-        }
-        else
-        {
-            speed = baseSpeed;
         }
 
         velocity.y += gravity * Time.deltaTime; // Gravity is constant
