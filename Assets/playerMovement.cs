@@ -7,7 +7,7 @@ public class playerMovement : MonoBehaviour
     public CharacterController controller;
 
     public float baseSpeed = 8f; // Adjustable default speed
-    private float speed;
+    private float currentSpeed;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
 
@@ -23,7 +23,7 @@ public class playerMovement : MonoBehaviour
     // Update is called on start-up
     void Start()
     {
-        speed = baseSpeed;
+        currentSpeed = baseSpeed;
     }
 
     // Update is called once per frame
@@ -39,50 +39,42 @@ public class playerMovement : MonoBehaviour
 
         if (isSprinting) // While sprinting, speed = 1.5x
         {
-            speed = baseSpeed * 1.5f;
+            currentSpeed = baseSpeed * 1.5f;
         }
         else
         {
-            speed = baseSpeed;
+            currentSpeed = baseSpeed;
         }
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-
-        Vector3 move = transform.right * x + transform.forward * z; // Basic movement for the player, x-axis being horizontal, z-axis being vertical
-
-        controller.Move(move * speed * Time.deltaTime); // Movement from 36 * current speed * time.
 
         if (Input.GetButtonDown("Jump") && isGrounded) // While on ground, jump is available
         {
             velocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
-        velocity.y += gravity * Time.deltaTime; // Gravity is constant
-
-        controller.Move(velocity * Time.deltaTime); // Velocity is constant every frame while key is pressed
-
         if (Input.GetButtonDown("Map"))
         {
             if (mapStatus)
             {
                 mapStatus = false;
+                baseSpeed = baseSpeed / 0.4f;
             }
             else
-            { 
+            {
                 mapStatus = true;
+                baseSpeed = baseSpeed * 0.4f;
             }
         }
 
-        if (mapStatus)
-        {
-            speed = 0f;
-        } 
-        else
-        {
-            speed = baseSpeed;
-        }
+        velocity.y += gravity * Time.deltaTime; // Gravity is constant
 
+        controller.Move(velocity * Time.deltaTime); // Velocity is constant every frame while key is pressed
+
+        Vector3 move = transform.right * x + transform.forward * z; // Basic movement for the player, x-axis being horizontal, z-axis being vertical
+
+        controller.Move(move * currentSpeed * Time.deltaTime); // Movement from 36 * current speed * time.
 
     }
 
