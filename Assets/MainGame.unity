@@ -3704,7 +3704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 1890410497}
-  groundDistance: 0.3
+  groundDistance: 0.6
   groundMask:
     serializedVersion: 2
     m_Bits: 192
@@ -7281,7 +7281,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1534104584}
   m_LocalRotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
-  m_LocalPosition: {x: -3, y: 15, z: -7.5}
+  m_LocalPosition: {x: -2.5, y: 15, z: -7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8161,6 +8161,7 @@ GameObject:
   - component: {fileID: 1674358260}
   - component: {fileID: 1674358261}
   - component: {fileID: 1674358262}
+  - component: {fileID: 1674358263}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -8222,7 +8223,7 @@ MonoBehaviour:
   gravity: -19.62
   jumpHeight: 4.5
   groundCheck: {fileID: 1890410497}
-  groundDistance: 0.3
+  groundDistance: 0.6
   groundMask:
     serializedVersion: 2
     m_Bits: 192
@@ -8295,6 +8296,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rate: 60
+--- !u!114 &1674358263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674358256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7512380c3ef88744bbc5ed014e2cbd47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundCheck: {fileID: 1890410497}
+  groundDistance: 0.6
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 192
+  controller: {fileID: 1674358258}
+  standingHeight: 2.5
+  crouchingHeight: 1.5
 --- !u!1 &1680456137
 GameObject:
   m_ObjectHideFlags: 0

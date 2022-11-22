@@ -17,24 +17,24 @@ public class sprintingScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_FieldOfView = 75f;
+        m_FieldOfView = 73.6f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        isSprinting = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) && isGrounded;
+        isSprinting = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) && isGrounded && (Input.GetKey(KeyCode.LeftControl)==false);
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
 
         if (isSprinting)
         {
-            if (m_FieldOfView < 85f) // If FOV is LESS than 80, increase.
+            if (m_FieldOfView < 86.4f) // If FOV is LESS than 86.4, increase.
             {
-                m_FieldOfView += 0.5f;
-                if (m_FieldOfView > 85f) // If FOV is GREATER than 80, set to 80.
+                m_FieldOfView += 0.426f; // Takes ~0.5s to reach maximum FOV/Sprint Speed.
+                if (m_FieldOfView > 86.4f) // If FOV is GREATER than 86.4, set to 86.4.
                 {
-                    m_FieldOfView = 85f;
+                    m_FieldOfView = 86.4f;
                 }
                 
             }
@@ -42,13 +42,13 @@ public class sprintingScript : MonoBehaviour
         }
         else
         {
-            if (m_FieldOfView > 75f)
+            if (m_FieldOfView > 73.6f)
             {
-                if (m_FieldOfView < 75f)
+                m_FieldOfView -= 0.426f;
+                if (m_FieldOfView < 73.6f)
                 {
-                    m_FieldOfView = 75f;
+                    m_FieldOfView = 73.6f;
                 }
-                m_FieldOfView -= 0.5f;
             }
             Camera.main.fieldOfView = m_FieldOfView;
         }

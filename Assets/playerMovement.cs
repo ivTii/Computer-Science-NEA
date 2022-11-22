@@ -18,6 +18,7 @@ public class playerMovement : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
     bool isSprinting;
+    bool isCrouching;
     bool mapStatus = false;
 
     // Update is called on start-up
@@ -30,7 +31,8 @@ public class playerMovement : MonoBehaviour
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); // Creates an invisible Sphere below the player. When colliding with groundMask, becomes true.
-        isSprinting = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) && isGrounded; // Checks for LSHIFT key down, TRUE when pressed
+        isSprinting = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) && isGrounded && (isCrouching == false); // Checks for LSHIFT key down, TRUE when pressed
+        isCrouching = Input.GetKey(KeyCode.LeftControl) && isGrounded;
 
         if (isGrounded && velocity.y < 0) // Prevents gravity from increasing rapidly
         {
@@ -39,11 +41,48 @@ public class playerMovement : MonoBehaviour
 
         if (isSprinting) // While sprinting, speed = 1.5x
         {
-            currentSpeed = baseSpeed * 1.5f;
+            if (currentSpeed < 12f)
+            {
+                currentSpeed += 0.135f; // Takes 0.5s to reach maximum speed.
+                if (currentSpeed > 12f)
+                {
+                    currentSpeed = 12f;
+                }
+            }
+        } 
+        else
+        {
+            if (currentSpeed > 8f)
+            {
+                currentSpeed -= 0.135f;
+                if (currentSpeed < 8f)
+                {
+                    currentSpeed = 8f;
+                }
+            }
+        }
+        
+        if (isCrouching)
+        {
+            if (currentSpeed > 4f)
+            {
+                currentSpeed -= 0.135f; // Takes 0.5s to reach crouching speed.
+                if (currentSpeed < 4f)
+                {
+                    currentSpeed = 4f; // Sets speed back to 4f as a limit.
+                }
+            }
         }
         else
         {
-            currentSpeed = baseSpeed;
+            if (currentSpeed < 8f)
+            {
+                currentSpeed += 0.135f;
+                if (currentSpeed > 8f)
+                {
+                    currentSpeed = 8f;
+                }
+            }
         }
 
         float x = Input.GetAxis("Horizontal");
