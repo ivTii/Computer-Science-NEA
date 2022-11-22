@@ -14,8 +14,8 @@ public class crouchingScript : MonoBehaviour
     public LayerMask groundMask;
 
     public CharacterController controller;
-    public float standingHeight = 2f;
-    public float crouchingHeight = 1.5f;
+    public float standingHeight = 2.5f;
+    public float crouchingHeight = 1.25f;
 
     // Start is called before the first frame update
     void Start()
@@ -30,13 +30,27 @@ public class crouchingScript : MonoBehaviour
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         isCrouching = Input.GetKey(KeyCode.LeftControl) && isGrounded;
 
-        if (isCrouching)
+        if (isCrouching) // Using scalar to reduce over time
         {
-            controller.height = crouchingHeight;
+            if (controller.height > crouchingHeight)
+            {
+                controller.height -= 0.084f; // Using difference over 0.25s --> 1.25f difference, 0.5s time, 60 fps => (d/t)/fps
+                if (controller.height < crouchingHeight)
+                {
+                    controller.height = crouchingHeight;
+                }
+            }
         }
         else
         {
-            controller.height = standingHeight;
+            if (controller.height < standingHeight)
+            {
+                controller.height += 0.084f; // Uses difference over 0.25s
+                if (controller.height > standingHeight)
+                {
+                    controller.height = standingHeight;
+                }
+            }
         }
     }
 }
