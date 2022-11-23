@@ -5,7 +5,7 @@ using UnityEngine;
 public class fpsCAP : MonoBehaviour
 {
     public float Rate = 50.0f;
-    float currentFrameTime;
+    public float currentFrameTime;
 
     void Start()
     {
