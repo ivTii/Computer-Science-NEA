@@ -6,7 +6,7 @@ public class playerMovement : MonoBehaviour
 {
     public CharacterController controller;
 
-    public float baseSpeed = 8f; // Adjustable default speed
+    public float baseSpeed = 5f; // Adjustable default speed
     private float currentSpeed;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
@@ -74,12 +74,12 @@ public class playerMovement : MonoBehaviour
         if (isSprinting && stamina > 0 && isExhausted == false) // While sprinting, speed = 1.5x
         {
             stamina -= 0.208f; // Takes 8s to reach 0 stamina.
-                if (currentSpeed < 12f)
+                if (currentSpeed < 7.5f)
                 {
-                    currentSpeed += 0.135f; // Takes 0.5s to reach maximum speed.
-                    if (currentSpeed > 12f)
+                    currentSpeed += 0.083f; // Takes 0.5s to reach maximum speed.
+                    if (currentSpeed > 7.5f)
                     {
-                        currentSpeed = 12f;
+                        currentSpeed = 7.5f;
                     }
 
                 }
@@ -87,12 +87,12 @@ public class playerMovement : MonoBehaviour
         } 
         else
         {
-            if (currentSpeed > 8f)
+            if (currentSpeed > 5f)
             {
-                currentSpeed -= 0.135f;
-                if (currentSpeed < 8f)
+                currentSpeed -= 0.083f;
+                if (currentSpeed < 5f)
                 {
-                    currentSpeed = 8f;
+                    currentSpeed = 5f;
                 }
                 exhaustedStatus += 2f;
             }
@@ -100,23 +100,23 @@ public class playerMovement : MonoBehaviour
         
         if (isCrouching)
         {
-            if (currentSpeed > 4f)
+            if (currentSpeed > 2.5f)
             {
-                currentSpeed -= 0.135f; // Takes 0.5s to reach crouching speed.
-                if (currentSpeed < 4f)
+                currentSpeed -= 0.083f; // Takes 0.5s to reach crouching speed.
+                if (currentSpeed < 2.5f)
                 {
-                    currentSpeed = 4f; // Sets speed back to 4f as a limit.
+                    currentSpeed = 2.5f; // Sets speed back to 4f as a limit.
                 }
             }
         }
         else
         {
-            if (currentSpeed < 8f)
+            if (currentSpeed < 5f)
             {
-                currentSpeed += 0.135f;
-                if (currentSpeed > 8f)
+                currentSpeed += 0.083f;
+                if (currentSpeed > 5f)
                 {
-                    currentSpeed = 8f;
+                    currentSpeed = 5f;
                 }
             }
         }
