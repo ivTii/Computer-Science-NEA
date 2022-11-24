@@ -21,6 +21,10 @@ public class playerMovement : MonoBehaviour
     bool isCrouching;
     bool mapStatus = false;
 
+    float stamina = 100f;
+    float exhaustedStatus = 0f;
+    bool isExhausted; 
+
     // Update is called on start-up
     void Start()
     {
@@ -31,24 +35,55 @@ public class playerMovement : MonoBehaviour
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); // Creates an invisible Sphere below the player. When colliding with groundMask, becomes true.
-        isSprinting = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) && isGrounded && (isCrouching == false); // Checks for LSHIFT key down, TRUE when pressed
+        isSprinting = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) && isGrounded && (isCrouching == false) && exhaustedStatus == 0; // Checks for LSHIFT key down, TRUE when pressed
         isCrouching = Input.GetKey(KeyCode.LeftControl) && isGrounded;
+        isExhausted = stamina <= 0f;
 
         if (isGrounded && velocity.y < 0) // Prevents gravity from increasing rapidly
         {
             velocity.y = -6f;
         }
 
-        if (isSprinting) // While sprinting, speed = 1.5x
+        if (isExhausted && exhaustedStatus == 0f)
         {
-            if (currentSpeed < 12f)
+            exhaustedStatus = 300f;
+        }
+
+        if (exhaustedStatus > 0f & isSprinting == false)
+        {
+            exhaustedStatus -= 1f;
+        } 
+   
+    
+        if (isSprinting == false && exhaustedStatus == 0)
+        {
+            stamina += 0.104f; // Takes 16s to reach 100 stamina.
+
+            if (stamina > 100)
             {
-                currentSpeed += 0.135f; // Takes 0.5s to reach maximum speed.
-                if (currentSpeed > 12f)
-                {
-                    currentSpeed = 12f;
-                }
+                    stamina = 100;
             }
+        }
+
+        if (stamina < 0)
+        {
+            stamina = 0;
+        }
+        
+
+        if (isSprinting && stamina > 0 && isExhausted == false) // While sprinting, speed = 1.5x
+        {
+            stamina -= 0.208f; // Takes 8s to reach 0 stamina.
+                if (currentSpeed < 12f)
+                {
+                    currentSpeed += 0.135f; // Takes 0.5s to reach maximum speed.
+                    if (currentSpeed > 12f)
+                    {
+                        currentSpeed = 12f;
+                    }
+
+                }
+            
         } 
         else
         {
@@ -59,6 +94,7 @@ public class playerMovement : MonoBehaviour
                 {
                     currentSpeed = 8f;
                 }
+                exhaustedStatus += 2f;
             }
         }
         

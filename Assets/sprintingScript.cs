@@ -14,6 +14,10 @@ public class sprintingScript : MonoBehaviour
     float m_FieldOfView;
     public float cameraDelay = 1f;
 
+    private float stamina = 100f;
+    private float exhaustedStatus = 0f;
+    private bool isExhausted;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,12 +27,38 @@ public class sprintingScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isSprinting = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) && isGrounded && (Input.GetKey(KeyCode.LeftControl)==false);
+        isSprinting = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) && isGrounded && (Input.GetKey(KeyCode.LeftControl)==false) && exhaustedStatus == 0;
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isExhausted = stamina <= 0f;
 
-
-        if (isSprinting)
+        if (isExhausted && exhaustedStatus == 0f)
         {
+            exhaustedStatus = 300f;
+        }
+
+        if (exhaustedStatus > 0f & isSprinting == false)
+        {
+            exhaustedStatus -= 1f;
+        }
+
+
+        if (isSprinting == false && exhaustedStatus == 0)
+        {
+            stamina += 0.104f; // Takes 16s to reach 100 stamina.
+
+            if (stamina > 100)
+            {
+                stamina = 100;
+            }
+            if (stamina < 0)
+            {
+                stamina = 0;
+            }
+        }
+
+        if (isSprinting && stamina > 0 && isExhausted == false)
+        {
+            stamina -= 0.208f;
             if (m_FieldOfView < 86.4f) // If FOV is LESS than 86.4, increase.
             {
                 m_FieldOfView += 0.426f; // Takes ~0.5s to reach maximum FOV/Sprint Speed.
@@ -49,6 +79,7 @@ public class sprintingScript : MonoBehaviour
                 {
                     m_FieldOfView = 73.6f;
                 }
+                exhaustedStatus += 2f;
             }
             Camera.main.fieldOfView = m_FieldOfView;
         }
