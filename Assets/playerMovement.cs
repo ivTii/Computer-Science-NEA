@@ -35,8 +35,8 @@ public class playerMovement : MonoBehaviour
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); // Creates an invisible Sphere below the player. When colliding with groundMask, becomes true.
-        isSprinting = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) && isGrounded && (isCrouching == false) && exhaustedStatus == 0; // Checks for LSHIFT key down, TRUE when pressed
-        isCrouching = Input.GetKey(KeyCode.LeftControl) && isGrounded;
+        isSprinting = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) && isGrounded && (isCrouching == false) && exhaustedStatus == 0 && mapStatus == false; // Checks for LSHIFT key down, TRUE when pressed
+        isCrouching = Input.GetKey(KeyCode.LeftControl) && isGrounded && mapStatus == false;
         isExhausted = stamina <= 0f;
 
         if (isGrounded && velocity.y < 0) // Prevents gravity from increasing rapidly
@@ -44,28 +44,37 @@ public class playerMovement : MonoBehaviour
             velocity.y = -6f;
         }
 
-        if (isExhausted && exhaustedStatus == 0f)
+        if (isExhausted && exhaustedStatus == 0f) // Grants the player exhausted status
         {
-            exhaustedStatus = 300f;
+            exhaustedStatus = 5f;
         }
 
-        if (exhaustedStatus > 0f & isSprinting == false)
+        if (exhaustedStatus > 0f & isSprinting == false) // Exhausted recovery for 6s
         {
-            exhaustedStatus -= 1f;
+            exhaustedStatus -= 0.0166f;
+            if (exhaustedStatus < 4f) // Stamina recovery while recoving from exhausted
+            {
+                stamina += 0.104f; 
+            }
         } 
+
+        if (exhaustedStatus <= 0f) // Prevents exhaustedStatus being less than 0
+        {
+            exhaustedStatus = 0f;
+        }
    
     
         if (isSprinting == false && exhaustedStatus == 0)
         {
             stamina += 0.104f; // Takes 16s to reach 100 stamina.
 
-            if (stamina > 100)
+            if (stamina > 100) // Prevents stamina going over 100
             {
-                    stamina = 100;
+                stamina = 100;
             }
         }
 
-        if (stamina < 0)
+        if (stamina < 0) // Prevents stamina being less than 0. isExhausted will still trigger upon falling under (extra frame)
         {
             stamina = 0;
         }
@@ -94,18 +103,18 @@ public class playerMovement : MonoBehaviour
                 {
                     currentSpeed = 5f;
                 }
-                exhaustedStatus += 2f;
+                exhaustedStatus += 0.0332f;
             }
         }
         
-        if (isCrouching)
+        if (isCrouching) // While crouching, speed = 0.5x
         {
             if (currentSpeed > 2.5f)
             {
                 currentSpeed -= 0.083f; // Takes 0.5s to reach crouching speed.
                 if (currentSpeed < 2.5f)
                 {
-                    currentSpeed = 2.5f; // Sets speed back to 4f as a limit.
+                    currentSpeed = 2.5f; // Sets speed back to 2.5f as a limit.
                 }
             }
         }
@@ -129,17 +138,17 @@ public class playerMovement : MonoBehaviour
             velocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
-        if (Input.GetButtonDown("Map"))
+        if (Input.GetButtonDown("Map")) // Check for mapStatus, decreasing speed if necessary
         {
             if (mapStatus)
             {
                 mapStatus = false;
-                baseSpeed = baseSpeed / 0.4f;
+                currentSpeed = baseSpeed / 0.4f;
             }
             else
             {
                 mapStatus = true;
-                baseSpeed = baseSpeed * 0.4f;
+                currentSpeed = baseSpeed * 0.4f;
             }
         }
 
