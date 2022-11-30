@@ -14,9 +14,16 @@ public class sprintingScript : MonoBehaviour
     float m_FieldOfView;
     public float cameraDelay = 1f;
 
-    private float stamina = 100f;
+    public float stamina = 100f;
     private float exhaustedStatus = 0f;
     private bool isExhausted;
+
+    public static sprintingScript instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
