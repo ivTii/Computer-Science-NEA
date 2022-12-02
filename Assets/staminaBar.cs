@@ -26,13 +26,6 @@ public class staminaBar : MonoBehaviour
  
             bar.transform.localScale = new Vector3((stamina/100), 1, 1);
 
-        if (stamina < 25)
-        {
-            redBar.SetActive(true);
-        }
-        else
-        {
-            redBar.SetActive(false);
-        }
+        redBar.SetActive(stamina < 15);
     }
 }

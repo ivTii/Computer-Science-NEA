@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class sprintingScript : MonoBehaviour
 {
-    bool isSprinting = false;
+    public bool isSprinting = false;
     bool isGrounded = false;
 
     public Transform groundCheck;
@@ -15,7 +15,7 @@ public class sprintingScript : MonoBehaviour
     public float cameraDelay = 1f;
 
     public float stamina = 100f;
-    private float exhaustedStatus = 0f;
+    public float exhaustedStatus = 0f;
     public bool isExhausted;
 
     public static sprintingScript instance;

@@ -14,7 +14,6 @@ public class flashlightScript : MonoBehaviour
     float randomNumberRecovery = 5f;
 
     int flickerCounter = 0;
-    int flickerChance = 0;
     bool flickerPrevention = false;
     int flickerCooldown = 0;
 
@@ -29,7 +28,6 @@ public class flashlightScript : MonoBehaviour
 
     void Update()
     {
-        flickerChance = 4;
 
         // Flashlight Hotkey
         if (Input.GetButtonDown("Flashlight"))
@@ -47,13 +45,14 @@ public class flashlightScript : MonoBehaviour
         // While flashlight is on OR a recent flicker has happened
         if (flashlightStatus || recentFlicker)
         {
-            randomNumber = Random.Range(0, 26 - flickerChance); // 4% chance for a flicker per frame
+            randomNumber = Random.Range(0, 26); // 4% chance for a flicker per frame
 
             if (randomNumber == 0f && flickerPrevention == true)
             {
                 flickerCounter--;
                 randomNumberRecovery--;
                 flickerCooldown++;
+
                 if (flickerCounter == 0)
                 {
                     flickerPrevention = false;
