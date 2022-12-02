@@ -16,7 +16,7 @@ public class sprintingScript : MonoBehaviour
 
     public float stamina = 100f;
     private float exhaustedStatus = 0f;
-    private bool isExhausted;
+    public bool isExhausted;
 
     public static sprintingScript instance;
 

@@ -21,7 +21,7 @@ public class playerMovement : MonoBehaviour
     bool isCrouching;
     bool mapStatus = false;
 
-    float stamina = 100f;
+    float stamina;
     float exhaustedStatus = 0f;
     bool isExhausted; 
 
@@ -29,6 +29,7 @@ public class playerMovement : MonoBehaviour
     void Start()
     {
         currentSpeed = baseSpeed;
+        stamina = sprintingScript.instance.stamina;
     }
 
     // Update is called once per frame
