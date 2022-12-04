@@ -5,8 +5,13 @@ using UnityEngine.UI;
 
 public class staminaDegen : MonoBehaviour
 {
-    public GameObject left;
-    public GameObject right;
+    // [DEGEN]
+    public GameObject leftD;
+    public GameObject rightD;
+
+    // [REGEN]
+    public GameObject leftR;
+    public GameObject rightR;
 
     double control = 0;
     float add = (370f/8)/120;
@@ -20,10 +25,17 @@ public class staminaDegen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        left = transform.Find("Left").gameObject;
-        right = transform.Find("Right").gameObject;
-        left.SetActive(true); 
-        right.SetActive(true); 
+        // [DEGEN]
+        leftD = transform.Find("Left.d").gameObject;
+        rightD = transform.Find("Right.d").gameObject;
+        leftD.SetActive(true); 
+        rightD.SetActive(true);
+
+        // [REGEN]
+        leftR = transform.Find("Left.i").gameObject;
+        rightR = transform.Find("Right.i").gameObject;
+        leftR.SetActive(false);
+        rightR.SetActive(false);
     }
 
     // Update is called once per frame
@@ -34,6 +46,9 @@ public class staminaDegen : MonoBehaviour
         isExhausted = sprintingScript.instance.isExhausted;
         exhaustedStatus = sprintingScript.instance.exhaustedStatus;
 
+        leftR.transform.localPosition = leftD.transform.localPosition;
+        rightR.transform.localPosition = rightD.transform.localPosition;
+
         if (stamina < 15 || stamina == 100) degenState = false;
         else degenState = true;
 
@@ -41,16 +56,19 @@ public class staminaDegen : MonoBehaviour
 
         if (degenState && isSprinting)
         {
-            left.SetActive(true);
-            left.transform.localPosition += new Vector3(add, 0, 0);
-            right.SetActive(true);
-            right.transform.localPosition += new Vector3((-1*add), 0, 0);
+            leftD.SetActive(true);
+            leftD.transform.localPosition += new Vector3(add, 0, 0);
+            rightD.SetActive(true);
+            rightD.transform.localPosition += new Vector3((-1*add), 0, 0);
+
+            leftR.SetActive(false);
+            rightR.SetActive(false);
 
         } 
         else
         {
-            left.SetActive(false);
-            right.SetActive(false);
+            leftD.SetActive(false);
+            rightD.SetActive(false);
 
             if (isExhausted == false && isSprinting == false && exhaustedStatus < 1 && stamina > 15)
             {
@@ -63,10 +81,19 @@ public class staminaDegen : MonoBehaviour
 
             if (isExhausted == false && isSprinting == false && control > 0 && exhaustedStatus < 1 && stamina > 15)
             {
-                left.transform.localPosition -= new Vector3(add/2, 0, 0);
-                right.transform.localPosition -= new Vector3((-1 * add)/2, 0, 0);
+                leftR.SetActive(true);
+                rightR.SetActive(true);
+
+                leftD.transform.localPosition -= new Vector3(add/2, 0, 0);
+                rightD.transform.localPosition -= new Vector3((-1 * add)/2, 0, 0);
+
+                if (stamina == 100)
+                {
+                    leftR.SetActive(false);
+                    rightR.SetActive(false);
+                }
             }
         }
-                
+
     }
 }
