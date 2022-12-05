@@ -838,8 +838,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -6.0977, y: 347.6037}
-  m_SizeDelta: {x: 1405.1, y: 842.6881}
+  m_AnchoredPosition: {x: 5.0974, y: 347.6037}
+  m_SizeDelta: {x: 1607.3, y: 842.6881}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &78935893
 MonoBehaviour:
@@ -4053,8 +4053,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -6.0976024, y: 347.6037}
-  m_SizeDelta: {x: 1405.1007, y: 842.6881}
+  m_AnchoredPosition: {x: 5.1059, y: 347.6037}
+  m_SizeDelta: {x: 1607.2377, y: 842.6881}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &570488964
 CanvasRenderer:
@@ -7128,6 +7128,7 @@ GameObject:
   - component: {fileID: 963194231}
   - component: {fileID: 963194233}
   - component: {fileID: 963194232}
+  - component: {fileID: 963194234}
   m_Layer: 0
   m_Name: playerCamera
   m_TagString: MainCamera
@@ -7193,7 +7194,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.87, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7272,13 +7273,31 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59700678e0092463cb106a3995cd22a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scanlineIntensity: 100
+  scanlineIntensity: 50
   scanlineWidth: 1
+--- !u!111 &963194234
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 3de1d5c4db37f1e46b2ae4db7efb0460, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 3de1d5c4db37f1e46b2ae4db7efb0460, type: 2}
+  - {fileID: 7400000, guid: 3de1d5c4db37f1e46b2ae4db7efb0460, type: 2}
+  - {fileID: 7400000, guid: 3de1d5c4db37f1e46b2ae4db7efb0460, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &969245306
 GameObject:
   m_ObjectHideFlags: 0
