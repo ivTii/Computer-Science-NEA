@@ -4,8 +4,8 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class ShaderEffect_CRT : MonoBehaviour {
 
-	public float scanlineIntensity = 100;
-	public int scanlineWidth = 1;
+	public float scanlineIntensity = 100f;
+	public float scanlineWidth = 0.5f;
 //	public Color scanlineColor = Color.black;
 //	public bool tVBulge = true;
 	private Material material_Displacement;

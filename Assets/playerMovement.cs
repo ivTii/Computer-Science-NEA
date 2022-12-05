@@ -21,7 +21,7 @@ public class playerMovement : MonoBehaviour
     bool isCrouching;
     bool mapStatus = false;
 
-    float stamina = 100f;
+    float stamina;
     float exhaustedStatus = 0f;
     bool isExhausted; 
 
@@ -29,6 +29,7 @@ public class playerMovement : MonoBehaviour
     void Start()
     {
         currentSpeed = baseSpeed;
+        stamina = sprintingScript.instance.stamina;
     }
 
     // Update is called once per frame
@@ -39,15 +40,9 @@ public class playerMovement : MonoBehaviour
         isCrouching = Input.GetKey(KeyCode.LeftControl) && isGrounded && mapStatus == false;
         isExhausted = stamina <= 0f;
 
-        if (isGrounded && velocity.y < 0) // Prevents gravity from increasing rapidly
-        {
-            velocity.y = -6f;
-        }
+        if (isGrounded && velocity.y < 0) velocity.y = -6f; // Prevents gravity from increasing rapidly
 
-        if (isExhausted && exhaustedStatus == 0f) // Grants the player exhausted status
-        {
-            exhaustedStatus = 5f;
-        }
+        if (isExhausted && exhaustedStatus == 0f) exhaustedStatus = 5f; // Grants the player exhausted status
 
         if (exhaustedStatus > 0f & isSprinting == false) // Exhausted recovery for 6s
         {

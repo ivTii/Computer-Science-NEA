@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class sprintingScript : MonoBehaviour
 {
-    bool isSprinting = false;
+    public bool isSprinting = false;
     bool isGrounded = false;
 
     public Transform groundCheck;
@@ -14,14 +14,24 @@ public class sprintingScript : MonoBehaviour
     float m_FieldOfView;
     public float cameraDelay = 1f;
 
-    private float stamina = 100f;
-    private float exhaustedStatus = 0f;
-    private bool isExhausted;
+    public float stamina = 100f;
+    public float exhaustedStatus = 0f;
+    public bool isExhausted;
+
+    public static sprintingScript instance;
+
+    public Animation anim;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         m_FieldOfView = 73.6f;
+        anim = GetComponent<Animation>();
     }
 
     // Update is called once per frame
@@ -41,7 +51,7 @@ public class sprintingScript : MonoBehaviour
             exhaustedStatus -= 1f;
         }
 
-
+        // Walking
         if (isSprinting == false && exhaustedStatus == 0)
         {
             stamina += 0.104f; // Takes 16s to reach 100 stamina.
@@ -56,6 +66,13 @@ public class sprintingScript : MonoBehaviour
             }
         }
 
+        // Walk animation regardless of exhaustion
+
+        if (isSprinting) anim.Play("Sprinting");
+        else if (Input.GetKey(KeyCode.W)) anim.Play("Walking");
+        else if (isSprinting == false && Input.GetKey(KeyCode.W) == false) anim.Play("Idle");
+
+        // Sprinting
         if (isSprinting && stamina > 0 && isExhausted == false)
         {
             stamina -= 0.208f;
@@ -66,7 +83,7 @@ public class sprintingScript : MonoBehaviour
                 {
                     m_FieldOfView = 86.4f;
                 }
-                
+
             }
             Camera.main.fieldOfView = m_FieldOfView;
         }
