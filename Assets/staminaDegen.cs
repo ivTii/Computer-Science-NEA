@@ -52,6 +52,8 @@ public class staminaDegen : MonoBehaviour
         if (stamina < 15 || stamina == 100) degenState = false;
         else degenState = true;
 
+        if (stamina < 0) stamina = 0;
+
         if (isSprinting && stamina > 15) control++;
 
         if (degenState && isSprinting)
@@ -75,7 +77,9 @@ public class staminaDegen : MonoBehaviour
                 control-= 0.5; // Lose control while regenerating
                 if (control < 0)
                 {
-                    control = 0;    
+                    control = 0;
+                    leftR.SetActive(false);
+                    rightR.SetActive(false);
                 }
             }
 

@@ -60,11 +60,9 @@ public class sprintingScript : MonoBehaviour
             {
                 stamina = 100;
             }
-            if (stamina < 0)
-            {
-                stamina = 0;
-            }
         }
+
+        if (stamina < 0) stamina = 0;
 
         // Walk animation regardless of exhaustion
 
