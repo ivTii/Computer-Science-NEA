@@ -5,17 +5,21 @@ using UnityEngine.AI;
 
 public class MoveTo : MonoBehaviour
 {
-    public float roamingRadius = 2500f;
-    float proximityRadius = 2500f;
+    float roamingRadius = 150f;
+    float proximityRadius = 50f;
     public Transform player;
     NavMeshAgent agent;
 
-    bool isPlayerClose = false;
+    public static MoveTo instance;
+
+    public bool isPlayerClose = false;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         InvokeRepeating("Roam", 0f, 3f);
+
+        instance = this;
     }
 
     void Update()
@@ -29,12 +33,12 @@ public class MoveTo : MonoBehaviour
         {
             isPlayerClose = true;
             agent.destination = player.position;
-            agent.speed = 25f;
+            agent.speed = 6f;
         }
         else
         {
             isPlayerClose = false;
-            agent.speed = 30f;
+            agent.speed = 8f;
         }
 
         Debug.Log(isPlayerClose);
