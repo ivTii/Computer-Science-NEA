@@ -5,6 +5,7 @@ using UnityEngine;
 public class playerMovement : MonoBehaviour
 {
     public CharacterController controller;
+    public GameObject player;
 
     public float baseSpeed = 5f; // Adjustable default speed
     private float currentSpeed;
@@ -23,14 +24,19 @@ public class playerMovement : MonoBehaviour
 
     float stamina;
     float exhaustedStatus = 0f;
-    bool isExhausted; 
+    bool isExhausted;
+
+    public static playerMovement instance;
 
     // Update is called on start-up
     void Start()
     {
         currentSpeed = baseSpeed;
+        instance = this;
         stamina = sprintingScript.instance.stamina;
+        Debug.Log(transform.localPosition.x);
     }
+
 
     // Update is called once per frame
     void Update()

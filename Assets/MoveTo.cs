@@ -7,12 +7,14 @@ public class MoveTo : MonoBehaviour
 {
     float roamingRadius = 150f;
     float proximityRadius = 50f;
+    float killRadius = 1f;
     public Transform player;
     NavMeshAgent agent;
 
     public static MoveTo instance;
 
     public bool isPlayerClose = false;
+    public bool playerDeath = false;
 
     void Start()
     {
@@ -26,9 +28,6 @@ public class MoveTo : MonoBehaviour
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, proximityRadius, LayerMask.GetMask("Player"));
 
-        Debug.Log(colliders);
-        
-
         if (Physics.CheckSphere(transform.position, proximityRadius, LayerMask.GetMask("Player")))
         {
             isPlayerClose = true;
@@ -41,9 +40,21 @@ public class MoveTo : MonoBehaviour
             agent.speed = 8f;
         }
 
-        Debug.Log(isPlayerClose);
-        Debug.Log(player);
+
+
+        if (isPlayerClose)
+        {
+            if (Physics.CheckSphere(transform.position, killRadius, LayerMask.GetMask("Player")))
+            {
+                playerDeath = true;
+            }
+        }
+
+
+
     }
+
+    
 
     void Roam()
     {
