@@ -4,7 +4,7 @@ public class ShaderEffect_CorruptedVram : MonoBehaviour {
 
 	float randomNumber;
 
-	float shift = 10;
+	float shift = 0;
 	public Texture texture;
 	public Material material;
 
@@ -15,13 +15,16 @@ public class ShaderEffect_CorruptedVram : MonoBehaviour {
 
     private void Update()
     {
-		if (MoveTo.instance.isPlayerClose == true)
+		if (SettingsButtonScript.instance.m_Camera == true)
 		{
-			randomNumber = Random.Range(-1.5f, 1.5f);
+			if (MoveTo.instance.isPlayerClose == true)
+			{
+				randomNumber = Random.Range(-1.5f, 1.5f);
+			}
+			else randomNumber = 0;
+			shift = randomNumber;
 		}
-		else randomNumber = 0;
-		shift = randomNumber;
-
+		else shift = 0;
     }
 
     void OnRenderImage (RenderTexture source, RenderTexture destination)

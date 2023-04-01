@@ -5,14 +5,17 @@ using UnityEngine;
 public class demonLight : MonoBehaviour
 {
     public GameObject light;
+    public bool lightActive;
 
     int random = 1;
-    int countdown;
+    public int countdown;
+
+    public static demonLight instance;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        instance = this;
     }
 
     // Update is called once per frame
@@ -30,7 +33,13 @@ public class demonLight : MonoBehaviour
             countdown--;
             random = 999;
             light.SetActive(true);
+            lightActive = true;
         }
-        else light.SetActive(false);
+        else
+        {
+            light.SetActive(false);
+            lightActive = false;
+        }
+        
     }
 }

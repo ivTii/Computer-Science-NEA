@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class MoveTo : MonoBehaviour
 {
     float roamingRadius = 150f;
-    float proximityRadius = 50f;
+    public float proximityRadius = 50f;
     float killRadius = 1f;
     public Transform player;
     NavMeshAgent agent;

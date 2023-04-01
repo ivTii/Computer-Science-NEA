@@ -66,9 +66,13 @@ public class sprintingScript : MonoBehaviour
 
         // Walk animation regardless of exhaustion
 
-        if (isSprinting) anim.Play("Sprinting");
-        else if (Input.GetKey(KeyCode.W)) anim.Play("Walking");
-        else if (isSprinting == false && Input.GetKey(KeyCode.W) == false) anim.Play("Idle");
+        if (SettingsButtonScript.instance.movement == true)
+        {
+            if (isSprinting) anim.Play("Sprinting");
+            else if (Input.GetKey(KeyCode.W)) anim.Play("Walking");
+            else if (isSprinting == false && Input.GetKey(KeyCode.W) == false) anim.Play("Idle");
+
+        }
 
         // Sprinting
         if (isSprinting && stamina > 0 && isExhausted == false)

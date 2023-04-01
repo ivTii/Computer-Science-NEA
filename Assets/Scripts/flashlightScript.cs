@@ -19,16 +19,17 @@ public class flashlightScript : MonoBehaviour
 
     bool possibleMalfunction = false;
     int randomMalfunction;
+    int min = 0;
 
     void Start()
     {
             flashlight = transform.GetChild(0).gameObject;
             Debug.Log(flashlight.name);
+        flashlightStatus = false;
     }
 
     void Update()
     {
-
         // Flashlight Hotkey
         if (Input.GetButtonDown("Flashlight"))
         {
@@ -41,89 +42,89 @@ public class flashlightScript : MonoBehaviour
                 flashlightStatus = true;
             }
         }
-
-        // While flashlight is on OR a recent flicker has happened
-        if (flashlightStatus || recentFlicker)
+        if (SettingsButtonScript.instance.m_Flashlight == true)
         {
-            randomNumber = Random.Range(0, 26); // 4% chance for a flicker per frame
 
-            if (randomNumber == 0f && flickerPrevention == true)
+            // While flashlight is on OR a recent flicker has happened
+            if (flashlightStatus || recentFlicker)
             {
-                flickerCounter--;
-                randomNumberRecovery--;
-                flickerCooldown++;
+                randomNumber = Random.Range(min, 26); // 4% chance for a flicker per frame
 
-                if (flickerCounter == 0)
+                if (randomNumber == 0f && flickerPrevention == true)
                 {
-                    flickerPrevention = false;
-                }
-            }
+                    flickerCounter--;
+                    randomNumberRecovery--;
+                    flickerCooldown++;
 
-            if (randomNumber == 0f && flickerPrevention == false) // Trigger flicker
-            {
-                flashlightStatus = false;
-                recentFlicker = true;
-                flickerCounter++;
-            }
-            else if (recentFlicker) // 20% chance to recover per frame after flicker
-            {
-
-                randomNumberFlicker = Random.Range(0, 5);
-
-                if (flickerCounter == randomNumberRecovery) // Will cancel the next x flickers
-                {
-                    if (flickerCounter > 0)
+                    if (flickerCounter == 0)
                     {
+                        flickerPrevention = false;
+                    }
+                }
+
+                if (randomNumber == 0f && flickerPrevention == false) // Trigger flicker
+                {
+                    flashlightStatus = false;
+                    recentFlicker = true;
+                    flickerCounter++;
+                }
+                else if (recentFlicker) // 20% chance to recover per frame after flicker
+                {
+
+                    randomNumberFlicker = Random.Range(0, 5);
+
+                    if (flickerCounter == randomNumberRecovery) // Will cancel the next x flickers
+                    {
+                        if (flickerCounter > 0)
+                        {
                             flickerPrevention = true;
-                    }  
+                        }
+                    }
+
+                    if (randomNumberFlicker == 0f)
+                    {
+                        flashlightStatus = true;
+                        recentFlicker = false;
+                    }
+
+                    if (randomNumberRecovery == 0) // Once recovery number reaches 0, refresh with a new random variable
+                    {
+                        randomNumberRecovery = Random.Range(6, 12);
+                    }
                 }
 
-                if (randomNumberFlicker == 0f)
+                if (flickerCounter > randomNumberRecovery) // Failsafe
                 {
-                    flashlightStatus = true;
-                    recentFlicker = false;
+                    flickerCounter -= flickerCounter;
                 }
 
-                if (randomNumberRecovery == 0) // Once recovery number reaches 0, refresh with a new random variable
+                if (flickerCooldown > 25) // Upon preventing 25 flickers, enter a cooldown state for 25 flickers. During this state, the flashlight can malfunction.
                 {
-                    randomNumberRecovery = Random.Range(6, 12);
+                    flickerCooldown = -25;
+                    randomNumberRecovery = 25;
+                    flickerCounter = 25;
                 }
-            }
 
-            if (flickerCounter > randomNumberRecovery) // Failsafe
-            {
-                flickerCounter -= flickerCounter;
-            }
-
-            if (flickerCooldown > 25) // Upon preventing 25 flickers, enter a cooldown state for 25 flickers. During this state, the flashlight can malfunction.
-            {
-                flickerCooldown = -25;
-                randomNumberRecovery = 25;
-                flickerCounter = 25;
-            }
-
-            if (flickerCooldown < 0)
-            {
-                possibleMalfunction = true;
-            } 
-            else
-            {
-                possibleMalfunction = false;
-            }
-
-            if (possibleMalfunction)
-            {
-                randomMalfunction = Random.Range(0, 1001);
-                if (randomMalfunction == 0)
+                if (flickerCooldown < 0)
+                {
+                    possibleMalfunction = true;
+                }
+                else
                 {
                     possibleMalfunction = false;
-                    flashlightStatus = false;
+                }
+
+                if (possibleMalfunction)
+                {
+                    randomMalfunction = Random.Range(0, 1001);
+                    if (randomMalfunction == 0)
+                    {
+                        possibleMalfunction = false;
+                        flashlightStatus = false;
+                    }
                 }
             }
-
-
         }
-            flashlight.SetActive(flashlightStatus);
-
+         flashlight.SetActive(flashlightStatus);
     }
 }
