@@ -8,7 +8,7 @@ public class ShaderEffect_CRT : MonoBehaviour {
 	public float scanlineWidth = 0.5f;
 //	public Color scanlineColor = Color.black;
 //	public bool tVBulge = true;
-	private Material material_Displacement;
+//	private Material material_Displacement;
 	private Material material_Scanlines;
 
 	void Awake ()

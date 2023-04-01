@@ -31,13 +31,13 @@ public class MoveTo : MonoBehaviour
 
         if (sprintingScript.instance.isSprinting)
         {
-            proximityRadius = 65f;
+            proximityRadius = 50f;
         }
         else if (playerMovement.instance.isCrouching)
         {
-            proximityRadius = 35f;
+            proximityRadius = 20f;
         }
-        else proximityRadius = 50f;
+        else proximityRadius = 35f;
 
         if (Physics.CheckSphere(transform.position, proximityRadius, LayerMask.GetMask("Player")))
         {
