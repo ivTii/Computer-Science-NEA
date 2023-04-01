@@ -10868,6 +10868,14 @@ PrefabInstance:
       propertyPath: m_Acceleration
       value: 9999
       objectReference: {fileID: 0}
+    - target: {fileID: 197094362, guid: b1b1e5a1f5b9b9d4d8f92ba08a596c3b, type: 3}
+      propertyPath: m_Height
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 197094362, guid: b1b1e5a1f5b9b9d4d8f92ba08a596c3b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2916532645300161460, guid: b1b1e5a1f5b9b9d4d8f92ba08a596c3b, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -10886,7 +10894,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4164162408626835671, guid: b1b1e5a1f5b9b9d4d8f92ba08a596c3b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 48.382473
+      value: 40.500164
       objectReference: {fileID: 0}
     - target: {fileID: 4164162408626835671, guid: b1b1e5a1f5b9b9d4d8f92ba08a596c3b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10894,7 +10902,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4164162408626835671, guid: b1b1e5a1f5b9b9d4d8f92ba08a596c3b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 63.50025
+      value: -44.50018
       objectReference: {fileID: 0}
     - target: {fileID: 4164162408626835671, guid: b1b1e5a1f5b9b9d4d8f92ba08a596c3b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -37937,6 +37945,9 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  isSprinting: 0
+  isCrouching: 0
+  mapStatus: 0
 --- !u!23 &1674358260
 MeshRenderer:
   m_ObjectHideFlags: 0

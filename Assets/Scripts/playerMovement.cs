@@ -19,7 +19,7 @@ public class playerMovement : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
     public bool isSprinting;
-    bool isCrouching;
+    public bool isCrouching;
     public bool mapStatus = false;
 
     float stamina;

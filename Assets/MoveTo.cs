@@ -10,6 +10,7 @@ public class MoveTo : MonoBehaviour
     float killRadius = 1f;
     public Transform player;
     NavMeshAgent agent;
+    float countdown;
 
     public static MoveTo instance;
 
@@ -28,9 +29,20 @@ public class MoveTo : MonoBehaviour
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, proximityRadius, LayerMask.GetMask("Player"));
 
+        if (sprintingScript.instance.isSprinting)
+        {
+            proximityRadius = 65f;
+        }
+        else if (playerMovement.instance.isCrouching)
+        {
+            proximityRadius = 35f;
+        }
+        else proximityRadius = 50f;
+
         if (Physics.CheckSphere(transform.position, proximityRadius, LayerMask.GetMask("Player")))
         {
             isPlayerClose = true;
+            countdown = 60;
             agent.destination = player.position;
             agent.speed = 6f;
         }
@@ -40,6 +52,11 @@ public class MoveTo : MonoBehaviour
             agent.speed = 8f;
         }
 
+        if (countdown > 0)
+        {
+            countdown = countdown - 1;
+                proximityRadius = 35f;
+        }
 
 
         if (isPlayerClose)
