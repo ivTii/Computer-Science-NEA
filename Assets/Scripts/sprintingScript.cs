@@ -37,7 +37,7 @@ public class sprintingScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isSprinting = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) && isGrounded && (Input.GetKey(KeyCode.LeftControl)==false) && exhaustedStatus == 0;
+        isSprinting = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) && isGrounded && (Input.GetKey(KeyCode.LeftControl) == false) && exhaustedStatus == 0 && playerMovement.instance.mapStatus == false;
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         isExhausted = stamina <= 0f;
 

@@ -18,9 +18,9 @@ public class playerMovement : MonoBehaviour
 
     Vector3 velocity;
     bool isGrounded;
-    bool isSprinting;
+    public bool isSprinting;
     bool isCrouching;
-    bool mapStatus = false;
+    public bool mapStatus = false;
 
     float stamina;
     float exhaustedStatus = 0f;
@@ -42,9 +42,14 @@ public class playerMovement : MonoBehaviour
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); // Creates an invisible Sphere below the player. When colliding with groundMask, becomes true.
-        isSprinting = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) && isGrounded && (isCrouching == false) && exhaustedStatus == 0 && mapStatus == false; // Checks for LSHIFT key down, TRUE when pressed
+        isSprinting = sprintingScript.instance.isSprinting; // Checks for LSHIFT key down, TRUE when pressed
         isCrouching = Input.GetKey(KeyCode.LeftControl) && isGrounded && mapStatus == false;
         isExhausted = stamina <= 0f;
+
+        if (mapStatus)
+        {
+            isSprinting = false;
+        }
 
         if (isGrounded && velocity.y < 0) velocity.y = -6f; // Prevents gravity from increasing rapidly
 

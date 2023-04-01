@@ -42,7 +42,7 @@ public class staminaDegen : MonoBehaviour
     void Update()
     {
         stamina = sprintingScript.instance.stamina;
-        isSprinting = sprintingScript.instance.isSprinting;
+        isSprinting = playerMovement.instance.isSprinting;
         isExhausted = sprintingScript.instance.isExhausted;
         exhaustedStatus = sprintingScript.instance.exhaustedStatus;
 
@@ -69,32 +69,35 @@ public class staminaDegen : MonoBehaviour
         } 
         else
         {
-            leftD.SetActive(false);
-            rightD.SetActive(false);
-
-            if (isExhausted == false && isSprinting == false && exhaustedStatus < 1 && stamina > 15)
+            if (playerMovement.instance.mapStatus == false)
             {
-                control-= 0.5; // Lose control while regenerating
-                if (control < 0)
+                leftD.SetActive(false);
+                rightD.SetActive(false);
+
+                if (isExhausted == false && isSprinting == false && exhaustedStatus < 1 && stamina > 15)
                 {
-                    control = 0;
-                    leftR.SetActive(false);
-                    rightR.SetActive(false);
+                    control -= 0.5; // Lose control while regenerating
+                    if (control < 0)
+                    {
+                        control = 0;
+                        leftR.SetActive(false);
+                        rightR.SetActive(false);
+                    }
                 }
-            }
 
-            if (isExhausted == false && isSprinting == false && control > 0 && exhaustedStatus < 1 && stamina > 15)
-            {
-                leftR.SetActive(true);
-                rightR.SetActive(true);
-
-                leftD.transform.localPosition -= new Vector3(add/2, 0, 0);
-                rightD.transform.localPosition -= new Vector3((-1 * add)/2, 0, 0);
-
-                if (stamina == 100)
+                if (isExhausted == false && isSprinting == false && control > 0 && exhaustedStatus < 1 && stamina > 15)
                 {
-                    leftR.SetActive(false);
-                    rightR.SetActive(false);
+                    leftR.SetActive(true);
+                    rightR.SetActive(true);
+
+                    leftD.transform.localPosition -= new Vector3(add / 2, 0, 0);
+                    rightD.transform.localPosition -= new Vector3((-1 * add) / 2, 0, 0);
+
+                    if (stamina == 100)
+                    {
+                        leftR.SetActive(false);
+                        rightR.SetActive(false);
+                    }
                 }
             }
         }
