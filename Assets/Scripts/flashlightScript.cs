@@ -25,7 +25,7 @@ public class flashlightScript : MonoBehaviour
     {
             flashlight = transform.GetChild(0).gameObject;
             Debug.Log(flashlight.name);
-        flashlightStatus = false;
+              flashlightStatus = false;
     }
 
     void Update()
@@ -42,7 +42,7 @@ public class flashlightScript : MonoBehaviour
                 flashlightStatus = true;
             }
         }
-        if (SettingsButtonScript.instance.m_Flashlight == true)
+        if (SettingsButtonScript.instance.flashlight == true)
         {
 
             // While flashlight is on OR a recent flicker has happened

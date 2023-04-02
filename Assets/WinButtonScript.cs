@@ -12,6 +12,7 @@ public class WinButtonScript : MonoBehaviour
     void Start()
     {
         m_menuButton.onClick.AddListener(Menu);
+        Cursor.lockState = CursorLockMode.None;
     }
     void Menu()
     {

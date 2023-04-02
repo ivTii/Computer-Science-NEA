@@ -7,7 +7,6 @@ public class ShaderEffect_CorruptedVram : MonoBehaviour {
 	float shift = 0;
 	public Texture texture;
 	public Material material;
-
 	void Awake ()
 	{
 		material = new Material( Shader.Find("Hidden/Distortion") );
@@ -15,7 +14,7 @@ public class ShaderEffect_CorruptedVram : MonoBehaviour {
 
     private void Update()
     {
-		if (SettingsButtonScript.instance.m_Camera == true)
+		if (SettingsButtonScript.instance.cameraGlitch == true)
 		{
 			if (MoveTo.instance.isPlayerClose == true)
 			{
@@ -25,6 +24,7 @@ public class ShaderEffect_CorruptedVram : MonoBehaviour {
 			shift = randomNumber;
 		}
 		else shift = 0;
+
     }
 
     void OnRenderImage (RenderTexture source, RenderTexture destination)
